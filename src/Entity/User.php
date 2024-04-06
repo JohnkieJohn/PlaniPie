@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,6 +33,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(targetEntity: CategoryEvent::class, mappedBy: 'user_id', orphanRemoval: true)]
+    private Collection $categoryEvents;
+
+    public function __construct()
+    {
+        $this->categoryEvents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,5 +115,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, CategoryEvent>
+     */
+    public function getCategoryEvents(): Collection
+    {
+        return $this->categoryEvents;
+    }
+
+    public function addCategoryEvent(CategoryEvent $categoryEvent): static
+    {
+        if (!$this->categoryEvents->contains($categoryEvent)) {
+            $this->categoryEvents->add($categoryEvent);
+            $categoryEvent->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategoryEvent(CategoryEvent $categoryEvent): static
+    {
+        if ($this->categoryEvents->removeElement($categoryEvent)) {
+            // set the owning side to null (unless already changed)
+            if ($categoryEvent->getUserId() === $this) {
+                $categoryEvent->setUserId(null);
+            }
+        }
+
+        return $this;
     }
 }
