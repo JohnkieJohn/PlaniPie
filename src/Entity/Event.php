@@ -53,9 +53,13 @@ class Event
     #[ORM\OneToMany(targetEntity: DetailEvent::class, mappedBy: 'event', orphanRemoval: true)]
     private Collection $detailEvents;
 
+    #[ORM\ManyToMany(targetEntity: Person::class)]
+    private Collection $person;
+
     public function __construct()
     {
         $this->detailEvents = new ArrayCollection();
+        $this->person = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -209,6 +213,30 @@ class Event
                 $detailEvent->setEvent(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Person>
+     */
+    public function getPerson(): Collection
+    {
+        return $this->person;
+    }
+
+    public function addPerson(Person $person): static
+    {
+        if (!$this->person->contains($person)) {
+            $this->person->add($person);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(Person $person): static
+    {
+        $this->person->removeElement($person);
 
         return $this;
     }
