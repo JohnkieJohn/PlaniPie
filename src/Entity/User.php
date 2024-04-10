@@ -37,9 +37,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: CategoryEvent::class, mappedBy: 'user_id', orphanRemoval: true)]
     private Collection $categoryEvents;
 
+    #[ORM\OneToMany(targetEntity: CategoryContact::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $categoryContacts;
+
+    #[ORM\OneToMany(targetEntity: Person::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $persons;
+
+    #[ORM\OneToMany(targetEntity: UserWeekDay::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $userWeekDays;
+
     public function __construct()
     {
         $this->categoryEvents = new ArrayCollection();
+        $this->categoryContacts = new ArrayCollection();
+        $this->persons = new ArrayCollection();
+        $this->userWeekDays = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -141,6 +153,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($categoryEvent->getUserId() === $this) {
                 $categoryEvent->setUserId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CategoryContact>
+     */
+    public function getCategoryContacts(): Collection
+    {
+        return $this->categoryContacts;
+    }
+
+    public function addCategoryContact(CategoryContact $categoryContact): static
+    {
+        if (!$this->categoryContacts->contains($categoryContact)) {
+            $this->categoryContacts->add($categoryContact);
+            $categoryContact->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategoryContact(CategoryContact $categoryContact): static
+    {
+        if ($this->categoryContacts->removeElement($categoryContact)) {
+            // set the owning side to null (unless already changed)
+            if ($categoryContact->getUser() === $this) {
+                $categoryContact->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Person>
+     */
+    public function getPersons(): Collection
+    {
+        return $this->persons;
+    }
+
+    public function addPerson(Person $person): static
+    {
+        if (!$this->persons->contains($person)) {
+            $this->persons->add($person);
+            $person->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePerson(Person $person): static
+    {
+        if ($this->persons->removeElement($person)) {
+            // set the owning side to null (unless already changed)
+            if ($person->getUser() === $this) {
+                $person->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserWeekDay>
+     */
+    public function getUserWeekDays(): Collection
+    {
+        return $this->userWeekDays;
+    }
+
+    public function addUserWeekDay(UserWeekDay $userWeekDay): static
+    {
+        if (!$this->userWeekDays->contains($userWeekDay)) {
+            $this->userWeekDays->add($userWeekDay);
+            $userWeekDay->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserWeekDay(UserWeekDay $userWeekDay): static
+    {
+        if ($this->userWeekDays->removeElement($userWeekDay)) {
+            // set the owning side to null (unless already changed)
+            if ($userWeekDay->getUser() === $this) {
+                $userWeekDay->setUser(null);
             }
         }
 
