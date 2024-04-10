@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use App\Repository\CategoryEventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategoryEventRepository::class)]
@@ -18,6 +20,18 @@ class CategoryEvent
     #[ORM\ManyToOne(inversedBy: 'categoryEvents')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'category_event', orphanRemoval: true)]
+    private Collection $events;
+
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Color $color = null;
+
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -44,6 +58,48 @@ class CategoryEvent
     public function setUserId(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setCategoryEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getCategoryEvent() === $this) {
+                $event->setCategoryEvent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getColor(): ?Color
+    {
+        return $this->color;
+    }
+
+    public function setColor(?Color $color): static
+    {
+        $this->color = $color;
 
         return $this;
     }

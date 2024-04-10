@@ -45,6 +45,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: UserWeekDay::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $userWeekDays;
+    
+    #[ORM\OneToMany(targetEntity: Event::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $events;
 
     public function __construct()
     {
@@ -52,6 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->categoryContacts = new ArrayCollection();
         $this->persons = new ArrayCollection();
         $this->userWeekDays = new ArrayCollection();
+        $this->events = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -159,7 +163,38 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
+    
+    /** 
+    *@return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+  /**
      * @return Collection<int, CategoryContact>
      */
     public function getCategoryContacts(): Collection
@@ -176,7 +211,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
     public function removeCategoryContact(CategoryContact $categoryContact): static
     {
         if ($this->categoryContacts->removeElement($categoryContact)) {
@@ -245,7 +279,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userWeekDay->setUser(null);
             }
         }
-
         return $this;
     }
+
 }
