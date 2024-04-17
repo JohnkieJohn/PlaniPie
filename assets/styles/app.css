@@ -1,3 +1,36 @@
+:root {
+    --primary-color: #414D6D;
+    --secondary-color: rgb(249, 244, 244);
+}
+
 body {
-    background-color: skyblue;
+    background-color: rgb(249, 244, 244);
+}
+
+.calendar-wrapper {
+    background-color: var(--primary-color);
+    color: white;
+    width: 76%;
+    margin: auto;
+}
+
+.calendar-wrapper h1, h2 {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.calendar-wrapper h2 {
+    border: 1px solid;
+    width: 20%;
+    margin: 2% auto 1%;
+}
+
+.calendar-wrapper table {
+    width: 100%;
+}
+
+.calendar-wrapper th, td {
+    width: 10%;
+    text-align: center;
+    border: 1px solid ;
 }
