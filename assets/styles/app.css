@@ -19,18 +19,60 @@ body {
     text-transform: uppercase;
 }
 
-.calendar-wrapper h2 {
+.calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 2% 0;
+}
+
+.calendar-header  h2, button {
     border: 1px solid;
+    margin: 0 0.4%;
+}
+
+.calendar-header  h2 {
     width: 20%;
-    margin: 2% auto 1%;
 }
 
-.calendar-wrapper table {
-    width: 100%;
+.calendar-header button {
+    width: 4%;
 }
 
-.calendar-wrapper th, td {
-    width: 10%;
+.btn-prev, .btn-next {
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    color: var(--primary-color);
+}
+
+.btn-prev:hover, .btn-next:hover {
+    background-color: var(--primary-color);
+    border: 1px solid var(--secondary-color);
+    color:var(--secondary-color);
+}
+
+.weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    padding: 10px;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
     text-align: center;
-    border: 1px solid ;
+}
+
+.days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-cell {
+    border: 1px solid var(--secondary-color);
+    text-align: center;
+    padding: 36px;
+}
+
+.day-cell:hover {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
 }

@@ -21,6 +21,22 @@ class MonthRepository extends ServiceEntityRepository
         parent::__construct($registry, Month::class);
     }
 
+        /**
+    * Récupère le nom du mois correspondant au numéro donné.
+    *
+    * @param int $month_number Le numéro du mois à rechercher.
+    *
+    * @return string|null Le nom du mois correspondant, ou null s'il n'existe pas.
+    */
+    public function getMonthNameFromDb(int $month_number): ?string
+    {
+        // Recherche le mois correspondant au numéro passé en paramètre
+        $month_match = $this->find($month_number);
+        // Récupère le nom du mois correspondant au numéro passé en paramètre s'il existe, sinon null
+        return $month_match ? $month_match->getNameMonth() : null;
+    }
+
+
     //    /**
     //     * @return Month[] Returns an array of Month objects
     //     */
@@ -45,4 +61,6 @@ class MonthRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+
 }
