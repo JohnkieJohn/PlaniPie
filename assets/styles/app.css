@@ -28,7 +28,8 @@ body {
 
 .calendar-header  h2, button {
     border: 1px solid;
-    margin: 0 0.4%;
+    margin: 0.4%;
+    padding-top: 3px;
 }
 
 .calendar-header  h2 {
@@ -41,7 +42,7 @@ body {
 
 .btn-prev, .btn-next {
     border: none;
-    padding: 5px 10px;
+    padding: 7px 10px;
     cursor: pointer;
     color: var(--primary-color);
 }
