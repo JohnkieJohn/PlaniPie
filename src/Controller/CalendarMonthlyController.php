@@ -21,7 +21,7 @@ class CalendarMonthlyController extends AbstractController
         $this->week_day_repository = $weekDayRepository;
     }
 
-    #[Route('/calendar/monthly/{monthId?}', name: 'app_calendar_monthly')]
+    #[Route('/calendar/monthly/{monthId?}/{year?}', name: 'app_calendar_monthly')]
     public function index(Request $request): Response
     {
         // Récupère tous les noms des jours de la semaine et des mois 
@@ -31,19 +31,24 @@ class CalendarMonthlyController extends AbstractController
         $current_date = new \DateTime();
         $days_of_month = [];
 
-        //Récupère le mois actuel
+        //Récupère le mois et l'année actuels
         $current_month_number = $current_date->format('n');
-        // Récupère le mois sélectionné à partir de la requête
+        $current_year = $current_date->format('Y');
+
+        // Récupère le mois et l'année sélectionnés à partir de la requête
         $selected_month = $request->attributes->get('monthId');
         if ($selected_month) {
-            // Si un mois est sélectionné dans la requête, utilise ce mois
             $current_month_number = $selected_month;
+        }
+        $selected_year = $request->attributes->get('year');
+        if ($selected_year) {
+            $current_year = $selected_year;
         }
         
         // Trouve le mois précédent
         $previous_month_index = ($current_month_number - 2 + 12) % 12;
         $previous_month = $name_months[$previous_month_index];
-
+        
         // Trouve le mois suivant
         $next_month_index = ($current_month_number % 12);
         $next_month = $name_months[$next_month_index];
@@ -52,9 +57,9 @@ class CalendarMonthlyController extends AbstractController
         $current_month_name = $this->month_repository->getMonthNameFromDb($current_month_number);
 
         // Appel de la méthode pour récupérer les jours du mois en cours
-        $days_of_month = $this->getDaysInMonth($current_month_number, $current_date->format('Y'));
+        $days_of_month = $this->getDaysInMonth($current_month_number, $current_year);
 
-        // Retourne la vue avec les jours de la semaine et le nom du mois actuel
+        // Retourne la vue avec les infos relatives à la date
         return $this->render('calendar_monthly/index.html.twig', [
             'days_of_week' => $name_days_week,
             'current_month_name' => $current_month_name,
@@ -62,10 +67,12 @@ class CalendarMonthlyController extends AbstractController
             'name_months' => $name_months,
             'previous_month' => $previous_month,
             'next_month' => $next_month,
+            'current_year' => $current_year,
+            'current_month_number' => $current_month_number
         ]);
     }
 
-    //Méthode pour récupérer les jours d'un mois en cours
+    // Récupère les jours d'un mois donné
     private function getDaysInMonth(int $month, int $year): array
     {
         $days_in_month = cal_days_in_month(CAL_GREGORIAN, $month, $year);
@@ -75,7 +82,6 @@ class CalendarMonthlyController extends AbstractController
             $current_day = new \DateTime(sprintf('%s-%s-%s', $year, $month, $day_number));
             $days_of_month[] = $current_day;
         }
-
         return $days_of_month;
     }
 }

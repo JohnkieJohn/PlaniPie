@@ -8,8 +8,12 @@
 
     <div class="calendar-header">
         <button class="btn-nav-month btn-prev" data-month="{{ previous_month.id }}"><</button>
-        <h2>{{ current_month_name }}</h2>
+        <h3 class="title-month" data-month={{ current_month_number }} >{{ current_month_name }}</h3>
         <button class="btn-nav-month btn-next" data-month="{{ next_month.id }}">></button>
+        
+        <button class="btn-nav-year btn-prev"><</button>
+        <h3 class="title-year">{{current_year}}</h3>
+        <button class="btn-nav-year btn-next" >></button>
     </div>
 
     <div class="calendar">
