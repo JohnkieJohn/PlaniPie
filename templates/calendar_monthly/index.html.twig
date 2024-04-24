@@ -4,29 +4,80 @@
 
 {% block body %}
 <div data-controller="calendarMonthly" class="calendar-wrapper">
-    <h1>Vue mois</h1>
+    <h1>Planipie</h1>
 
     <div class="calendar-header">
-        <button class="btn-nav-month btn-prev" data-month="{{ previous_month.id }}"><</button>
-        <h3 class="title-month" data-month={{ current_month_number }} >{{ current_month_name }}</h3>
-        <button class="btn-nav-month btn-next" data-month="{{ next_month.id }}">></button>
-        
-        <button class="btn-nav-year btn-prev"><</button>
-        <h3 class="title-year">{{current_year}}</h3>
-        <button class="btn-nav-year btn-next" >></button>
+        <div class="calendar-set-date">
+            <button class="btn-nav-month btn-prev" data-month="{{ previous_month.id }}"><</button>
+            <h3 class="title-month" data-month={{ current_month_number }} >{{ current_month_name }}</h3>
+            <button class="btn-nav-month btn-next" data-month="{{ next_month.id }}">></button>
+            
+            <button class="btn-nav-year btn-prev"><</button>
+            <h3 class="title-year">{{current_year}}</h3>
+            <button class="btn-nav-year btn-next" >></button>
+        </div>
+        <div class="calendar-month-week">
+            <button class="btn-set-month-week">Mois</button>
+            <button class="btn-set-month-week">Semaine</button>
+        </div>
+        <div class="calendar-size-light">
+            <button class="btn-set-size-light"><i class="fa-solid fa-up-right-and-down-left-from-center"></i></button>
+            <button class="btn-set-size-light"><i class="fa-solid fa-moon"></i></button>
+        </div>
     </div>
 
     <div class="calendar">
-        <div class="weekdays">
-            {% for day in days_of_week %}
-                <div>{{ day.nameWeekDay }}</div>
-            {% endfor %}
-        </div>
+        <div class="calendar-content">
+            <div class="weekdays">
+                {% for day in days_of_week %}
+                    <div>{{ day.nameWeekDay }}</div>
+                {% endfor %}
+            </div>
 
-    <div class="days">
-        {% for day in days_of_month %}
-            <div class="day-cell">{{ day.format('j') }}</div>
-        {% endfor %}
+            <div class="days">
+                {% for day in days_of_month %}
+                    <div class="day-cell" data-day="{{ day.format('j') }}">{{ day.format('j') }}</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="dashboard">
+            <h2>Hello</h2>
+        </div>
+     </div>
+</div>
+<div class="popup-add-event" data-controller="popupAddEvent">
+    <div class="popup-add-event-content">
+        <button id="btn-close-popup" class="btn-close-popup">X</button>
+        <form id="popup-add-event-form" class="popup-add-event-form">
+        <h3 class="popup-add-event-title"></h3>
+            <div class="event-form-group">
+                <label for="popup-add-title">Titre :</label>
+                <input type="text" id="popup-add-title" name="popup-add-title" required>
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-desc">Description :</label>
+                <textarea id="popup-add-desc" name="popup-add-desc"></textarea>
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-event-start">Début :</label>
+                <input type="datetime-local" id="popup-add-event-start" name="popup-add-event-start">
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-event-end">Fin :</label>
+                <input type="datetime-local" id="popup-add-event-end" name="popup-add-event-end">
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-recurrence">Récurrence :</label>
+                <input type="checkbox" id="popup-add-recurrence" name="popup-add-recurrence">
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-recurrence-end">Fin de récurrence :</label>
+                <input type="datetime-local" id="popup-add-recurrence-end" name="popup-add-recurrence_end">
+            </div>
+             <div class="event-form-btn">
+                <button type="submit">Ajouter</button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

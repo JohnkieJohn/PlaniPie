@@ -4,15 +4,19 @@
 }
 
 body {
-    background-color: rgb(249, 244, 244);
+    background-color: var(--primary-color);
+}
+
+input, textarea {
+    border: none;
 }
 
 .calendar-wrapper {
     background-color: var(--primary-color);
     color:  var(--secondary-color);
-    width: 76%;
-    margin: auto;
-    margin-top: 2%;
+    margin-left: 50px;
+    margin-right: 20px;
+    margin-top: 40px;
 }
 
 .calendar-wrapper h1, h3 {
@@ -20,43 +24,126 @@ body {
     text-transform: uppercase;
 }
 
+.calendar-wrapper h3 {
+    text-transform: capitalize;
+}
+
+/* Calendar Navbar Month */
 .calendar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 82.8%;
+}
+
+.calendar-set-date {
     display: flex;
     align-items: center;
     margin: 20px 0;
 }
 
-.calendar-header  h3, button {
+.calendar-set-date h3, button {
     border: 1px solid;
     padding-top: 2px;
 }
 
-.calendar-header  .title-month {
-    width: 126px;
+.calendar-set-date .title-month {
+    width: 122px;
 }
 
-.calendar-header  .title-year {
-    width: 90px;
+.calendar-set-date .title-year {
+    width: 80px;
 }
 
-.calendar-header button {
-    width: 30px;
+.calendar-set-date button {
+    width: 28px;
 }
 
 .btn-prev, .btn-next {
     border: 1px solid var(--secondary-color);
-    padding: 4px 10px;
+    padding: 4px;
     cursor: pointer;
+    background-color: var(--primary-color);
     color:  var(--secondary-color);
 }
 
 .btn-next {
-    margin-right: 0.2%;
+    margin-right: 2px;
 }
 
 .btn-prev:hover, .btn-next:hover {
     background-color:  var(--secondary-color);
-    color:var(--primary-color);
+    color: var(--primary-color);
+}
+
+.calendar-month-week {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    margin-right: 110px;
+}
+
+.calendar-month-week button {
+    background-color: var(--primary-color);
+    color:  var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    cursor: pointer;
+    padding: 4px 10px;
+    font-size: 1.1em;
+    font-weight: 700;
+    width: 100px;
+    margin-right: 2px;
+}
+
+.calendar-month-week button:hover, button:active {
+    background-color:  var(--secondary-color);
+    color: var(--primary-color);
+    
+}
+
+.calendar-size-light {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.btn-set-size-light {
+    background-color: var(--primary-color);
+    color:  var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    cursor: pointer;
+    padding: 5px 10px 3px;
+    width: 50px;
+    font-size: 1em;
+    margin-right: 2px;
+}
+
+.btn-set-size-light:hover, .btn-set-size-light:active {
+    background-color:  var(--secondary-color);
+    color: var(--primary-color);
+}
+/* End Calendar Navbar Month */
+
+/* Content Calendar Month */
+.calendar {
+    display: flex;
+    align-items: stretch;
+}
+
+.calendar-content {
+    flex: 1;
+    margin-right: 26px;
+}
+
+.dashboard {
+    flex: 0 0 260px; 
+    background-color:var(--secondary-color);
+    color: var(--primary-color);
+    padding: 4px 6px;
+}
+
+.dashboard h2 {
+    text-align: center;
 }
 
 .weekdays {
@@ -66,6 +153,7 @@ body {
     background-color: var(--secondary-color);
     color: var(--primary-color);
     text-align: center;
+    font-size: 1.1em;
 }
 
 .days {
@@ -83,3 +171,48 @@ body {
     background-color: var(--secondary-color);
     color: var(--primary-color);
 }
+/* End Content Calndar Month */
+
+/* Popup add event */
+.popup-add-event {
+    display: none; 
+    position: fixed;
+    width: 26%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 30px;
+    border: 1px solid #ccc;
+    z-index: 9999;
+}
+
+.event-form-group {
+    margin-bottom: 20px;
+}
+
+.event-form-group label {
+    width: 170px;
+    display: inline-block;
+}
+
+.event-form-group input[type="text"], textarea {
+    width: 270px;
+    max-width: 270px;
+    min-height: 20px;
+    max-height: 120px;
+    display: inline-block;
+}
+
+.btn-close-popup {
+    background-color: red;
+    color: white; 
+    border: none; 
+    padding: 6px 10px; 
+    position: absolute; 
+    top: 10px;
+    right: 10px;
+    cursor: pointer; 
+}
+/* End Popup add event*/
