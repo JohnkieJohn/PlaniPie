@@ -216,3 +216,72 @@ input, textarea {
     cursor: pointer; 
 }
 /* End Popup add event*/
+
+/* Calendar Weekly */
+
+.calendar-weekly {
+    display: flex;
+    justify-content: center;
+}
+
+.weekly-content {
+    display: grid;
+    grid-template-rows: 0.05fr 0.95fr;
+    grid-template-columns: 0.08fr 0.92fr;
+    width: 60vw;
+}
+
+.weekly-days {
+    grid-column-start: 2;
+    font-size: 1em;
+    padding: 0;
+}
+
+.weekly-calendar {
+    grid-row-start: 2;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 0.08fr 0.92fr;
+    height: 70vh;
+    overflow: scroll;
+}
+
+.weekly-hours {
+    display: grid;
+    grid-template-rows: repeat(96, 50px);
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    text-align: center;
+    font-size: 1em;
+    gap: 1px;
+}
+
+.weekly-hours > div, .weekly-days > div {
+    display: flex;
+    justify-content: left;
+    align-items: top;
+    outline: 1px solid var(--primary-color);
+}
+
+.weekly-days > div {
+    align-items: center;
+    justify-content: center;
+}
+
+.weekly-grid {
+    grid-column-start: 2;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-column {
+    display: grid;
+    grid-template-rows: repeat(96, 50px);
+    gap: 1px;
+}
+
+.hour-cell{
+    outline: 1px solid var(--secondary-color);
+}
+
+/* End calendar Weekly */
