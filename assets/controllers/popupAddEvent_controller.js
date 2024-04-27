@@ -8,11 +8,15 @@ export default class extends Controller {
             const btnClosePopup = document.getElementById('btn-close-popup');
             const titlePopupEvent = document.querySelector('.popup-add-event-title');
             const eventForm = document.getElementById('popup-add-event-form');
+            const eventStart = document.getElementById('popup-add-event-start');
         
             dayCells.forEach(dayCell => {
                 dayCell.addEventListener('click', function() {
-                    const dayNumber = this.dataset.day;
-                    titlePopupEvent.textContent = 'Jour ' + dayNumber;
+                    const dayDate = this.dataset.day;
+                    const dayDateTime = `${dayDate}T00:00`;
+
+                    titlePopupEvent.textContent = 'Jour ' + dayDate;                   
+                    eventStart.value = dayDateTime ;
                     popupEvent.style.display = 'block';
                 });
             });
@@ -22,14 +26,12 @@ export default class extends Controller {
                 // Récupère les valeurs du formulaire
                 const eventTitle = document.getElementById('popup-add-title').value;
                 const eventDesc = document.getElementById('popup-add-desc').value;
-                const eventEnd = document.getElementById('popup-add-event-end').value;
-                const eventStart = document.getElementById('popup-add-event-start').value;
+                const eventEnd = document.getElementById('popup-add-event-end').value;               
                 const eventRecurrence = document.getElementById('popup-add-recurrence').checked;
                 const eventRecurrenceEnd = document.getElementById('popup-add-recurrence-end').value;
         
                 console.log(eventTitle);
-                console.log(eventDesc);
-                console.log(eventEnd );
+                console.log(eventDesc);              
                 console.log(eventStart);
                 
                 popupEvent.style.display ="none";

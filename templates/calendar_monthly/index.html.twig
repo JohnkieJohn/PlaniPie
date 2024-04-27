@@ -36,7 +36,7 @@
 
             <div class="days">
                 {% for day in days_of_month %}
-                    <div class="day-cell" data-day="{{ day.format('j') }}">{{ day.format('j') }}</div>
+                    <div class="day-cell" data-day="{{ day.format('Y-m-d') }}">{{ day.format('j') }}</div>
                 {% endfor %}
             </div>
         </div>
@@ -65,6 +65,10 @@
             <div class="event-form-group">
                 <label for="popup-add-event-end">Fin :</label>
                 <input type="datetime-local" id="popup-add-event-end" name="popup-add-event-end">
+            </div>
+            <div class="event-form-group">
+                <label for="popup-add-all-day">Journée entière :</label>
+                <input type="checkbox" id="popup-add-all-day" name="popup-add-all-day">
             </div>
             <div class="event-form-group">
                 <label for="popup-add-recurrence">Récurrence :</label>
