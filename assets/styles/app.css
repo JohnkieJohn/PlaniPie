@@ -221,7 +221,7 @@ input, textarea {
 
 .calendar-weekly {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
 }
 
 .weekly-content {
